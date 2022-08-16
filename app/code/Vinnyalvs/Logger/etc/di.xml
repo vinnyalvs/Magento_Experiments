@@ -6,7 +6,7 @@
             <argument name="name" xsi:type="string">MyLogger</argument>
             <argument name="handlers"  xsi:type="array">
                 <item name="debug" xsi:type="object">Vinnyalvs\Logger\Logger\Handler\DebugHandler</item>
-                <item name="critcal" xsi:type="object">Vinnyalvs\Logger\Logger\Handler\CriticalHandler</item>
+                <item name="critical" xsi:type="object">Vinnyalvs\Logger\Logger\Handler\CriticalHandler</item>
                 <item name="info" xsi:type="object">Vinnyalvs\Logger\Logger\Handler\InfoHandler</item>
             </argument>
         </arguments>
