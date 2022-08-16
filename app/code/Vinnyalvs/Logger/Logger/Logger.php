@@ -1,6 +1,6 @@
 <?php
 
-namespace Vinnyalvs\HelloWorld\Logger;
+namespace Vinnyalvs\Logger\Logger;
 
 class Logger extends \Monolog\Logger
 {
