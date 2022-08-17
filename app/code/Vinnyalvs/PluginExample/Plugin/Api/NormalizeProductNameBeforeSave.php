@@ -1,6 +1,6 @@
 <?php
 
-namespace Vinnyalvs\PluginExample\Plugin;
+namespace Vinnyalvs\PluginExample\Plugin\Api;;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;

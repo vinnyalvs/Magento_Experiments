@@ -2,9 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Catalog\Api\ProductRepositoryInterface">
-        <plugin name="normalize_before_save_product"  type="Vinnyalvs\PluginExample\Plugin\normalizeProductNameBeforeSave"/>
-        <plugin name="log_after_save_product"  type="Vinnyalvs\PluginExample\Plugin\logProductNameAfterSave"/>
-        <plugin name="log_product_name_around_save" type="Vinnyalvs\PluginExample\Plugin\LogProductNameAroundSave"/>
+        <plugin name="normalize_before_save_product"  type="Vinnyalvs\PluginExample\Plugin\Api\NormalizeProductNameBeforeSave"/>
+        <plugin name="log_after_save_product"  type="Vinnyalvs\PluginExample\Plugin\Api\LogProductNameAfterSave"/>
+        <plugin name="log_product_name_around_save" type="Vinnyalvs\PluginExample\Plugin\Api\LogProductNameAroundSave"/>
     </type>
 
 

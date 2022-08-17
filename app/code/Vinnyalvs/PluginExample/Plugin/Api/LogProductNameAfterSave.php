@@ -1,10 +1,10 @@
 <?php
 
-namespace Vinnyalvs\PluginExample\Plugin;
+namespace Vinnyalvs\PluginExample\Plugin\Api;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Vinnyalvs\Logger\Logger\Logger;
+use Vinnyalvs\Logger\Logger\Logger as Logger;
 
 class LogProductNameAfterSave
 {
@@ -24,7 +24,7 @@ class LogProductNameAfterSave
      */
     public function afterSave(ProductRepositoryInterface $subject, ProductInterface $result, ProductInterface $product, $saveOptions = false): ProductInterface
     {
-        $this->logger->info("Executing afterSave .. "  );
+        $this->logger->info("AAAAAAAAAAAAAAAAA Executing afterSave .. "  );
         return $result;
     }
 }
