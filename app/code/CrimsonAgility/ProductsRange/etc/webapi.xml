@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route url="rest/V1/products/search" method="POST">
-        <service class="CrimsonAgility\ProductsRange\Api\SearchProducts\SearchProducts" method="search"/>
+    <route url="/V1/products/search" method="POST">
+        <service class="CrimsonAgility\ProductsRange\Api\SearchProductsByRangeInterface" method="execute"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
-        <data>
-            <parameter name="lowprice">%low_price%</parameter>
-            <parameter name="highprice">%high_price%</parameter>
-            <parameter name="sortoption">%sort_option%</parameter>
-        </data>
     </route>
 </routes>
