@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <title>Advanced Search</title>
+    </head>
+    <referenceBlock name="page.main.title">
+        <action method="setPageTitle">
+            <argument translate="true" name="title" xsi:type="string">Search Products</argument>
+        </action>
+    </referenceBlock>
+    <referenceContainer name="content">
+        <block class="CrimsonAgility\ProductsRange\Block\ProductsRange" name="custom_tab_ca"
+               template="CrimsonAgility_ProductsRange::advancedsearch.phtml" />
+    </referenceContainer>
+
+</page>
