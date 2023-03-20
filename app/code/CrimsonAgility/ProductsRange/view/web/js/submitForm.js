@@ -4,6 +4,7 @@ require([
 ], function ($, url) {
     alert("testeeee");
     $('#submit-btn').click(function (event) {
+        alert("testeeee");
         $('#form-id').validate({
             rules: {
                 lowprice: {

@@ -5,7 +5,7 @@
     <preference for="CrimsonAgility\ProductsRange\Api\ValidatorInterface"
                 type="CrimsonAgility\ProductsRange\Model\ValidatorChain"/>
 
-    <type name="CrimsonAgility\ProductsRange\Model\ValidatorChain">
+    <virtualType name="CrimsonAgility\ProductsRange\Model\ValidatorChain">
         <arguments>
             <argument name="validators" xsi:type="array">
                 <item name="empty" xsi:type="object">CrimsonAgility\ProductsRange\Model\Validators\NoEmptyFields</item>
@@ -14,10 +14,9 @@
                 <item name="negative" xsi:type="object">CrimsonAgility\ProductsRange\Model\Validators\NoNegativeOrZeroFields</item>
             </argument>
         </arguments>
-    </type>
+    </virtualType>
 
     <preference for="CrimsonAgility\ProductsRange\Api\SearchProductsByRangeInterface"
                 type="CrimsonAgility\ProductsRange\Model\SearchProductsByRange" />
-
 
 </config>

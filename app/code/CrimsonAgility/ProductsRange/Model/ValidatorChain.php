@@ -16,6 +16,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Validation\ValidationResult;
 use Magento\Framework\Validation\ValidationResultFactory;
 
+/**
+ * @inheritdoc
+ */
 class ValidatorChain implements ValidatorInterface
 {
     /**
@@ -39,6 +42,9 @@ class ValidatorChain implements ValidatorInterface
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function validate(array $params): ValidationResult
     {
         $errors = [[]];

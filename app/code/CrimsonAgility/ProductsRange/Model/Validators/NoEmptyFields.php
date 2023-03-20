@@ -26,11 +26,9 @@ class NoEmptyFields implements ValidatorInterface
      */
     public function validate(array $params): ValidationResult
     {
-        $highPrice = $params['high_price'] ?? null;
-        $lowPrice = $params['low_price'] ?? null;
         $errors = [];
 
-        if ($highPrice !== null || $lowPrice !== null) {
+        if ( !isset($params['high_price']) || !isset($params['low_price']) ) {
             $errors[] = __(
                 'fields can not be empty for Search.'
             );

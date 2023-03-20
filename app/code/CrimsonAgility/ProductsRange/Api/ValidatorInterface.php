@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace CrimsonAgility\ProductsRange\Api;
 use Magento\Framework\Validation\ValidationResult;
 
-
 /**
  * Structure to check if a set of attributes are valid
  */

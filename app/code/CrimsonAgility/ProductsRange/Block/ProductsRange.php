@@ -15,6 +15,12 @@ use Magento\Directory\Model\CurrencyFactory;
  */
 class ProductsRange extends Template
 {
+    /**
+     * @param Context $context
+     * @param StoreManagerInterface $storeManager
+     * @param CurrencyFactory $currencyFactory
+     * @param array $data
+     */
     public function __construct(
         private readonly Context $context,
         private readonly StoreManagerInterface $storeManager,
@@ -24,11 +30,9 @@ class ProductsRange extends Template
         parent::__construct($context, $data);
     }
 
-    public function getText(): string
-    {
-        return "Alo Mundo";
-    }
-
+    /**
+     * @return string
+     */
     public function getFormActionUrl(): string
     {
         return "rest/V1/products/search";

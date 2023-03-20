@@ -13,21 +13,6 @@ use Magento\Framework\View\Result\PageFactory;
 class AdvancedSearch implements HttpGetActionInterface
 {
     /**
-     * @var PageFactory
-     */
-    private PageFactory $resultPageFactory;
-
-    /**
-     * @var Session
-     */
-    private Session $session;
-
-    /**
-     * @var UrlInterface
-     */
-    private UrlInterface $url;
-
-    /**
      * Products By Range Controller constructor
      *
      * @param PageFactory $resultPageFactory
@@ -35,18 +20,14 @@ class AdvancedSearch implements HttpGetActionInterface
      * @param UrlInterface $url
      */
     public function __construct(
-        PageFactory $resultPageFactory,
-        Session $session,
-        UrlInterface $url
+        private readonly PageFactory $resultPageFactory,
+        private readonly Session $session,
+        private readonly UrlInterface $url
     ) {
-        $this->resultPageFactory = $resultPageFactory;
-        $this->session = $session;
-        $this->url = $url;
     }
 
     /**
      * @return ResultInterface
-     * @throws \Magento\Framework\Exception\SessionException
      */
     public function execute(): ResultInterface
     {

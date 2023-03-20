@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace CrimsonAgility\ProductsRange\Test\Unit\Model;
+
 use CrimsonAgility\ProductsRange\Model\ValidatorChain;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Validation\ValidationResult;
@@ -11,25 +13,29 @@ use CrimsonAgility\ProductsRange\Model\Validators\NoEmptyFields;
 class ValidatorChainTest extends TestCase
 {
     /**
-     * @var ValidationResultFactory|(ValidationResultFactory&\PHPUnit\Framework\MockObject\MockObject)|\PHPUnit\Framework\MockObject\MockObject
+     * @var ValidationResultFactory
      */
-    private ValidationResultFactory|\PHPUnit\Framework\MockObject\MockObject $validationResultFactoryMock;
+    private ValidationResultFactory $validationResultFactoryMock;
+
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|NoEmptyFields|(\PHPUnit\Framework\MockObject\MockObject&NoEmptyFields)
+     * @var NoEmptyFields
      */
-    private NoEmptyFields|\PHPUnit\Framework\MockObject\MockObject $exampleValidator;
-    /**
-     * @var array|NoEmptyFields[]|(\PHPUnit\Framework\MockObject\MockObject&NoEmptyFields[])|\PHPUnit\Framework\MockObject\MockObject[]
-     */
+    private NoEmptyFields $exampleValidator;
+
     private array $validatorsMock;
     /**
-     * @var ValidationResult|(ValidationResult&\PHPUnit\Framework\MockObject\MockObject)|\PHPUnit\Framework\MockObject\MockObject
+     * @var ValidationResult $validationResultMock;
      */
-    private ValidationResult|\PHPUnit\Framework\MockObject\MockObject $validationResulMock;
+    private ValidationResult $validationResultMock;
+
+    /**
+     * @var ValidatorChain $instance;
+     */
     private ValidatorChain $instance;
 
     /**
      * Test setup
+     * @throws LocalizedException
      */
     protected function setUp(): void
     {
@@ -45,7 +51,7 @@ class ValidatorChainTest extends TestCase
         $this->validationResultFactoryMock = $this->createMock(ValidationResultFactory::class);
         $this->exampleValidator = $this->createMock(NoEmptyFields::class);
         $this->validatorsMock = [$this->exampleValidator];
-        $this->validationResulMock = $this->createMock(ValidationResult::class);
+        $this->validationResultMock = $this->createMock(ValidationResult::class);
     }
 
     /**
