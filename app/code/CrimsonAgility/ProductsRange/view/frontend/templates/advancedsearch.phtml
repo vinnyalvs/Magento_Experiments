@@ -1,6 +1,6 @@
 <?php
 /**
- * @var CrimsonAgility\ProductsRange\Block\ProductsRange $block
+ * @let CrimsonAgility\ProductsRange\Block\ProductsRange $block
  */
 $text = $block->getText();
 try {
@@ -45,35 +45,20 @@ try {
             </form>
         </div>
         <br/>
-        <div id="p1"></div>
-<!--        <div class ="row products-div"  id="products-div" style="display: none" >-->
-<!--            <div class="productlist row-header" style="display: table-row;">-->
-<!--                <h2>Products in range</h2>-->
-<!--                <div class="productlist-header">-->
-<!--                    <div class="productlist-col">Thumbnail</div>-->
-<!--                    <div class="productlist-col">SKU</div>-->
-<!--                    <div class="productlist-col">Name</div>-->
-<!--                    <div class="productlist-col">Quantity</div>-->
-<!--                    <div class="productlist-col">Price (--><?php //=__($currency)?><!--)</div>-->
-<!--                    <div class="productlist-col">Product URL</div>-->
-<!--                </div>-->
-<!--                <div class="productlist-body" id="custom-tbody">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        <table class="product-table">
-            <caption>Products in range</caption>
+        <div id="label-loading" style="display: none"><h3> Loading... </h3></div>
+        <div id="label-noresponse" style="display: none"><h3> Not Products found in this Range </h3></div>
+        <table id="main-table" style="display: none">
             <thead>
             <tr>
-                <th scope="col">Thumbnail</th>
-                <th scope="col">SKU</th>
-                <th scope="col">Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price (<?=__($currency)?>)</th>
-                <th scope="col">Product URL</th>
+                <th>Thumbnail</th>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price (<?=__($currency)?>)</th>
+                <th>URL</th>
             </tr>
             </thead>
-            <tbody class="productlist-body" id="custom-tbody">
+            <tbody  id="main-table-body">
             </tbody>
         </table>
 
@@ -101,46 +86,58 @@ try {
                 contentType: 'application/json',
                 processData: false,
                 beforeSend: function () {
-                    $( '#p1' ).append( '<h3> Loading... </h3>');
+                    $("#label-loading").css("display", "block");
+                    $("#main-table").css("display", "none");
+                    $("#label-noresponse").css("display", "none");
+                    $("#main-table-body").empty();
                 },
                 success: function (response) {
                     displayproductsTable(response);
                 },
                 error: function (response) {
-                    console.log("Erro ao recuperar produtos");
+                    data = response.responseJSON
+                    if(data.message === "Parameter Validation Failed"){
+                        $('#label-loading').append('<h3> Invalid Range Params, please try with different inputs </h3>');
+                    }
+                    else {
+                        $('#label-loading').append('<h3> There is a problem in our website, please try again later. </h3>');
+                    }
                 },
             });
     });
 
         function displayproductsTable(products){
-            $("#products-div").css("display", "block");
-            $("#product-table").find("tr:gt(0)").remove();
+            $("#label-loading").css("display", "none");
+            if(products.length === 0) {
+                $("#label-noresponse").css("display", "block");
+            } else {
+                $("#main-table").css("display", "block");
+                $("#label-noresponse").css("display", "none");
+                for (let product of products) {
+                    let sku_string = '<td class="row sku">' + product.sku + '</td>';
+                    let name_string = '<td class="row name">' + product.name + '</td>';
+                    let thumbnail_string = '<td class="row name">' + 'Foto' + '</td>';
+                    let price_string = '<td class="row name">' + product.price + '</td>';
+                    let url_string = '<td class="row name">' + '<a  href=' + product.url + '> Product page </a> </td>';
+                    let qty_string = '<td class="row name">' + product.qty + '</td>';
+                    let sku = $(sku_string);
+                    let name = $(name_string);
+                    let thumbnail = $(thumbnail_string);
+                    let price = $(price_string);
+                    let url = $(url_string);
+                    let qty = $(qty_string);
 
-            for (let product of products) {
-                console.log(product.price)
-                var sku_string = '<td class="row sku">' + product.sku + '</td>';
-                var name_string = '<td class="row name">' + product.name + '</td>';
-                var thumbnail_string = '<td class="row name">' + 'Foto' + '</td>';
-                var price_string = '<td class="row name">' + product.price + '</td>';
-                var url_string = '<td class="row name">' + '<a  href=' + product.url + '> Product page </a> </td>';
-                var qty_string = '<td class="row name">' + product.qty + '</td>';
-                var sku = $(sku_string);
-                var name = $(name_string);
-                var thumbnail = $(thumbnail_string);
-                var price = $(price_string);
-                var url = $(url_string);
-                var qty = $(qty_string);
-
-                var tr_1 = $('<tr>');
-                var tr_2 =  $('</tr>');
-                $('#custom-tbody').append(tr_1);
-                $('#custom-tbody').append(thumbnail);
-                $('#custom-tbody').append(sku);
-                $('#custom-tbody').append(name);
-                $('#custom-tbody').append(qty);
-                $('#custom-tbody').append(price);
-                $('#custom-tbody').append(url);
-                $('#custom-tbody').append(tr_2);
+                    let tr_1 = $('<tr>');
+                    let tr_2 =  $('</tr>');
+                    $('#main-table-body').append(tr_1);
+                    $('#main-table-body').append(thumbnail);
+                    $('#main-table-body').append(sku);
+                    $('#main-table-body').append(name);
+                    $('#main-table-body').append(qty);
+                    $('#main-table-body').append(price);
+                    $('#main-table-body').append(url);
+                    $('#main-table-body').append(tr_2);
+                }
             }
         }
 
