@@ -16,6 +16,7 @@ class NoNegativeOrZeroFields implements ValidatorInterface
     /**
      * @param ValidationResultFactory $validationResultFactory
      */
+
     public function __construct(
         private readonly ValidationResultFactory $validationResultFactory
     ) {

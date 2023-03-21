@@ -33,7 +33,7 @@ class NoMoreThanFiveTimesHigher implements ValidatorInterface
         if ($highPrice !== null || $lowPrice !== null) {
             if($highPrice >= 5* $lowPrice){
                 $errors[] = __(
-                    'High Price can no more than 5x higher than the entered "Low Price.'
+                    'High Price can be no more than 5x higher than the entered "Low Price.'
                 );
             }
         }
