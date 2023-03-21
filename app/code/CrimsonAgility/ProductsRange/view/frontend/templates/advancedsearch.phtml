@@ -17,27 +17,27 @@ try {
                 <div class="field">
                     <label for="input1" class="label"><span><?php echo __('Low Price') ?></span></label>
                     <div class="control">
-                        <input name="lowprice" id="input1" title="<?php echo __('Low price') ?>" value="" class="input-text" type="text" required>
+                        <input name="lowPrice" id="input1" title="<?php echo __('Low price') ?>" value="" class="input-text" type="text" required>
                     </div>
                 </div>
                 <div class="field">
                     <label for="input2" class="label"><span><?php echo __('High Price') ?></span></label>
                     <div class="control">
-                        <input name="highprice" id="input2" title="<?php echo __('High Price') ?>" value="" class="input-text" type="text" required>
+                        <input name="highPrice" id="input2" title="<?php echo __('High Price') ?>" value="" class="input-text" type="text" required>
                     </div>
                 </div>
                 <div class="field">
                     <label for="input3" class="label"><span><?php echo __('Sort By price') ?></span></label>
                     <div class="control">
-                        <select name="sortoption" id="input3" title="sort" required>
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
+                        <select name="sorting" id="input3" title="sort" required>
+                            <option value="ascending">Ascending</option>
+                            <option value="descending">Descending</option>
                         </select>
                     </div>
                 </div>
                 <div class="actions-toolbar">
                     <div class="primary">
-                        <button type="button" class="action submit primary" id= "submit-btn" title="<?php echo __('Submit') ?>">
+                        <button type="button" class="action submit primary" id="submit-btn" title="<?php echo __('Submit') ?>">
                             <span><?php echo __('Submit') ?></span>
                         </button>
                     </div>
@@ -45,20 +45,106 @@ try {
             </form>
         </div>
         <br/>
-        <div class ="row">
-            <div class="productlist">
-                <h2>Products in range</h2>
-                <div class="productlist-header">
-                    <div class="productlist-col">Thumbnail</div>
-                    <div class="productlist-col">SKU</div>
-                    <div class="productlist-col">Name</div>
-                    <div class="productlist-col">Quantity</div>
-                    <div class="productlist-col">Price (<?=__($currency)?>)</div>
-                    <div class="productlist-col">Product URL</div>
-                </div>
-                <div class="productlist-body" id="custom-tbody">
-                </div>
-            </div>
-        </div>
+        <div id="p1"></div>
+<!--        <div class ="row products-div"  id="products-div" style="display: none" >-->
+<!--            <div class="productlist row-header" style="display: table-row;">-->
+<!--                <h2>Products in range</h2>-->
+<!--                <div class="productlist-header">-->
+<!--                    <div class="productlist-col">Thumbnail</div>-->
+<!--                    <div class="productlist-col">SKU</div>-->
+<!--                    <div class="productlist-col">Name</div>-->
+<!--                    <div class="productlist-col">Quantity</div>-->
+<!--                    <div class="productlist-col">Price (--><?php //=__($currency)?><!--)</div>-->
+<!--                    <div class="productlist-col">Product URL</div>-->
+<!--                </div>-->
+<!--                <div class="productlist-body" id="custom-tbody">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <table class="product-table">
+            <caption>Products in range</caption>
+            <thead>
+            <tr>
+                <th scope="col">Thumbnail</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price (<?=__($currency)?>)</th>
+                <th scope="col">Product URL</th>
+            </tr>
+            </thead>
+            <tbody class="productlist-body" id="custom-tbody">
+            </tbody>
+        </table>
+
     </div>
+    <br>
 </div>
+<script >
+    require([
+        'jquery',
+        'mage/url',
+    ], function ($, url) {
+        $('#submit-btn').click(function (event) {
+            let actionUrl = url.build('rest/V1/products/search');
+            let payload = {
+                "lowPrice": $("#input1").val(),
+                "highPrice": $("#input2").val(),
+                "sorting": $("#input3").val()
+            };
+
+            event.preventDefault();
+            $.ajax({
+                url: actionUrl,
+                data: JSON.stringify(payload),
+                type: 'POST',
+                contentType: 'application/json',
+                processData: false,
+                beforeSend: function () {
+                    $( '#p1' ).append( '<h3> Loading... </h3>');
+                },
+                success: function (response) {
+                    displayproductsTable(response);
+                },
+                error: function (response) {
+                    console.log("Erro ao recuperar produtos");
+                },
+            });
+    });
+
+        function displayproductsTable(products){
+            $("#products-div").css("display", "block");
+            $("#product-table").find("tr:gt(0)").remove();
+
+            for (let product of products) {
+                console.log(product.price)
+                var sku_string = '<td class="row sku">' + product.sku + '</td>';
+                var name_string = '<td class="row name">' + product.name + '</td>';
+                var thumbnail_string = '<td class="row name">' + 'Foto' + '</td>';
+                var price_string = '<td class="row name">' + product.price + '</td>';
+                var url_string = '<td class="row name">' + '<a  href=' + product.url + '> Product page </a> </td>';
+                var qty_string = '<td class="row name">' + product.qty + '</td>';
+                var sku = $(sku_string);
+                var name = $(name_string);
+                var thumbnail = $(thumbnail_string);
+                var price = $(price_string);
+                var url = $(url_string);
+                var qty = $(qty_string);
+
+                var tr_1 = $('<tr>');
+                var tr_2 =  $('</tr>');
+                $('#custom-tbody').append(tr_1);
+                $('#custom-tbody').append(thumbnail);
+                $('#custom-tbody').append(sku);
+                $('#custom-tbody').append(name);
+                $('#custom-tbody').append(qty);
+                $('#custom-tbody').append(price);
+                $('#custom-tbody').append(url);
+                $('#custom-tbody').append(tr_2);
+            }
+        }
+
+
+    })
+
+</script>
