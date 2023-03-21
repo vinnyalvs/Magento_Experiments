@@ -12,8 +12,7 @@ try {
 <div class="row">
     <div class ="mp-col-md-8" >
         <div class = "row">
-            <form method="post" action="" id="search-products-form"  data-hasrequired="<?= __('* Required Fields') ?>"
-                  data-mage-init='{"validation":{}}'>
+            <form method="post" action="" id="search-products-form" >
                 <div class="field">
                     <label for="input1" class="label"><span><?php echo __('Low Price') ?></span></label>
                     <div class="control">
@@ -46,6 +45,7 @@ try {
         </div>
         <br/>
         <div id="label-loading" style="display: none"><h3> Loading... </h3></div>
+        <div id="label-validateData" style="display: none"></div>
         <div id="label-noresponse" style="display: none"><h3> Not Products found in this Range </h3></div>
         <table id="main-table" style="display: none">
             <thead>
@@ -77,34 +77,60 @@ try {
                 "highPrice": $("#input2").val(),
                 "sorting": $("#input3").val()
             };
-
-            event.preventDefault();
-            $.ajax({
-                url: actionUrl,
-                data: JSON.stringify(payload),
-                type: 'POST',
-                contentType: 'application/json',
-                processData: false,
-                beforeSend: function () {
-                    $("#label-loading").css("display", "block");
-                    $("#main-table").css("display", "none");
-                    $("#label-noresponse").css("display", "none");
-                    $("#main-table-body").empty();
-                },
-                success: function (response) {
-                    displayproductsTable(response);
-                },
-                error: function (response) {
-                    data = response.responseJSON
-                    if(data.message === "Parameter Validation Failed"){
-                        $('#label-loading').append('<h3> Invalid Range Params, please try with different inputs </h3>');
-                    }
-                    else {
-                        $('#label-loading').append('<h3> There is a problem in our website, please try again later. </h3>');
-                    }
-                },
-            });
+            $("#label-validateData").empty();
+            $("#label-validateData").css("display", "none");
+            if(checkIfFormIsValid()){
+                event.preventDefault();
+                $.ajax({
+                    url: actionUrl,
+                    data: JSON.stringify(payload),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    processData: false,
+                    beforeSend: function () {
+                        $("#label-loading").css("display", "block");
+                        $("#main-table").css("display", "none");
+                        $("#label-noresponse").css("display", "none");
+                        $("#main-table-body").empty();
+                    },
+                    success: function (response) {
+                        displayproductsTable(response);
+                    },
+                    error: function (response) {
+                        data = response.responseJSON
+                        if(data.message === "Parameter Validation Failed"){
+                            $('#label-loading').append('<h3> Invalid Range Params, please try with different inputs </h3>');
+                        }
+                        else {
+                            $('#label-loading').append('<h3> There is a problem in our website, please try again later. </h3>');
+                        }
+                    },
+                });
+            }
     });
+
+        function checkIfFormIsValid(){
+            $("#main-table").css("display", "none");
+            $("#label-validateData").css("display", "block");
+           let lowPrice =  $("#input1").val();
+           let highPrice =  $("#input2").val();
+            if(highPrice === '' || lowPrice === ''){
+                $('#label-validateData').append('<h3> Fields cannot be empty </h3>');
+                return false
+            }
+           else if(lowPrice < 0){
+               $('#label-validateData').append('<h3> Low Price cannot be negative  </h3>');
+               return false
+           }else if(highPrice > 5*lowPrice){
+               $('#label-validateData').append('<h3> High Price cannot be 5 times greater than low price  </h3>');
+               return false
+           }else if(Number(lowPrice) > Number(highPrice)){
+               $('#label-validateData').append('<h3> Low Price cannot be greater than highPrice </h3>');
+               return false
+           }
+            $('#label-validateData').css("display", "none");
+            return true;
+        }
 
         function displayproductsTable(products){
             $("#label-loading").css("display", "none");
@@ -140,7 +166,6 @@ try {
                 }
             }
         }
-
 
     })
 

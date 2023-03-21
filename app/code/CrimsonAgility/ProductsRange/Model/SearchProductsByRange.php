@@ -73,7 +73,7 @@ class SearchProductsByRange implements SearchProductsByRangeInterface
            return match($sorting) {
                'ascending' => 'ASC',
                'descending' => 'DESC',
-                default => 'DESC'
+                default => 'ASC'
            };
     }
 

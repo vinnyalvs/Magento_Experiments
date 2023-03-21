@@ -5,6 +5,7 @@
     <head>
         <title>Advanced Search</title>
     </head>
+    <body>
     <referenceBlock name="page.main.title">
         <action method="setPageTitle">
             <argument translate="true" name="title" xsi:type="string">Search Products</argument>
@@ -14,5 +15,5 @@
         <block class="CrimsonAgility\ProductsRange\Block\ProductsRange" name="custom_tab_ca"
                template="CrimsonAgility_ProductsRange::advancedsearch.phtml" />
     </referenceContainer>
-
+    </body>
 </page>
