@@ -5,10 +5,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-//$_SERVER['MAGE_PROFILER'] = [ 'drivers' => [['output' => 'MSP\DevTools\Profiler\Driver\Standard\Output\DevTools']] ];
-$_SERVER['MAGE_PROFILER'] ='MSP\DevTools\Profiler\Driver\Standard\Output\DevTools';
 
 use Magento\Framework\App\Bootstrap;
+
 try {
     require __DIR__ . '/../app/bootstrap.php';
 } catch (\Exception $e) {
