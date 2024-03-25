@@ -1,0 +1,9 @@
+<theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/theme.xsd">
+    <parent>Magento/luma</parent>
+    <title>My theme</title>
+    <description>Magento theme created for PDI</description>
+    <media>
+        <preview_image>media/preview.jpg</preview_image> <!-- the path to your theme's preview image -->
+    </media>
+</theme>
+
