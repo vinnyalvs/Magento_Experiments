@@ -18,6 +18,8 @@ use Magento\Framework\Exception\NotFoundException;
 
 class Show implements HttpGetActionInterface
 {
+    const ADMIN_RESOURCE = 'VinnyAlvs_AdminController::menu';
+
     /**
      * Execute action based on request and return result
      *

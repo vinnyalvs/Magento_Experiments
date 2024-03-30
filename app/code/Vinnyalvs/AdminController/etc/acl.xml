@@ -4,7 +4,8 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="VinnyAlvs_AdminController::menu" sortOrder="10" disabled="false" title="Magenteiro Menu"/>
+                <resource id="VinnyAlvs_AdminController::menu" sortOrder="10" disabled="false" title="Menu"/>
+                <resource id="VinnyAlvs_AdminController::api" sortOrder="50" disabled="false" title="APi"/>
             </resource>
         </resources>
     </acl>
